@@ -38,6 +38,7 @@
     <Folder Include="Controllers\" />
     <Folder Include="Data\Interfaces\" />
     <Folder Include="Data\Repositories\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

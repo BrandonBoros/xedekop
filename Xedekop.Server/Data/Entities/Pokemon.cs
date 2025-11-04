@@ -35,14 +35,14 @@
         public string Name { get; set; }
 
         /// <summary>
-        /// The Type(s) of the Pokemon.
+        /// The First Type of the Pokemon.
         /// </summary>
-        public Type[] Types { get; set; } = new Type[2];
+        public string Type1 { get; set; }
 
         /// <summary>
-        /// The description of the Pokemon.
+        /// The Second Type, if exists of the Pokemon.
         /// </summary>
-        public string Description { get; set; }
+        public string? Type2 { get; set; }
 
         /// <summary>
         /// The price of the Pokemon.

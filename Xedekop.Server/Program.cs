@@ -8,7 +8,7 @@ namespace Xedekop.Server
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -28,7 +28,23 @@ namespace Xedekop.Server
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddTransient<PokeSeeder>();
+
             var app = builder.Build();
+
+            // seed db
+            await RunSeeding(app);
+
+            async Task RunSeeding(WebApplication app)
+            {
+                var scopeFactory = app.Services.GetService<IServiceScopeFactory>();
+
+                using (var scope = scopeFactory.CreateScope())
+                {
+                    var seeder = scope.ServiceProvider.GetService<PokeSeeder>();
+                    await seeder.Seed();
+                }
+            }
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
