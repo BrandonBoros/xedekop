@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Xedekop.Server.Data;
 using Xedekop.Server.Data.Entities;
+using Xedekop.Server.Data.Interfaces;
+using Xedekop.Server.Data.Repositories;
 
 namespace Xedekop.Server
 {
@@ -29,6 +31,9 @@ namespace Xedekop.Server
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddTransient<PokeSeeder>();
+
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped<IRepositoryProvider, RepositoryProvider>();
 
             var app = builder.Build();
 

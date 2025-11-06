@@ -25,7 +25,11 @@ namespace Xedekop.Server.Data.Repositories
         #endregion Constructors
 
         #region Methods
-
+        /// <summary>
+        /// Gets the repository of the provided entity type.
+        /// </summary>
+        /// <typeparam name="T">The generic entity type.</typeparam>
+        /// <returns>Gets the repository of the provided entity type.</returns>
         public IPokeRepository<T>? GetRepositoryForEntityType<T>() where T : class
         {
             return GetRepository<IPokeRepository<T>>(_repositoryFactories.GetRepositoryFactoryForEntityType<T>());
@@ -63,8 +67,10 @@ namespace Xedekop.Server.Data.Repositories
             {
                 throw new Exception("No factory for repository type, " + typeof(T).FullName);
             }
+
             var repo = (T)f(dbContext);
             Repositories[typeof(T)] = repo;
+
             return repo;
         }
 

@@ -1,21 +1,21 @@
 {
   "Version": 1,
-  "Hash": "r4ioqtVDUkVoQFJ3UzhKEywLru27kcoLLGT3G02BgFI=",
+  "Hash": "SjXNbmyIN3AcRu6Y0J20IszITn7f99CibRsvD24qHJg=",
   "Source": "Xedekop.Server",
   "BasePath": "_content/Xedekop.Server",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [
     {
-      "Identity": "C:\\Users\\2377215\\source\\repos\\Xedekop\\xedekop.client\\xedekop.client.esproj",
+      "Identity": "C:\\Users\\2377215\\Source\\Repos\\Xedekop\\xedekop.client\\xedekop.client.esproj",
       "Version": 2,
       "Source": "xedekop.client",
       "GetPublishAssetsTargets": "GetCurrentProjectPublishStaticWebAssetItems",
       "AdditionalPublishProperties": "Configuration=Debug;Platform=AnyCPU",
-      "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained",
+      "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;TargetFramework",
       "GetBuildAssetsTargets": "GetCurrentProjectBuildStaticWebAssetItems",
       "AdditionalBuildProperties": "Configuration=Debug;Platform=AnyCPU",
-      "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained"
+      "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;TargetFramework"
     }
   ],
   "DiscoveryPatterns": [],
