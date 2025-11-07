@@ -33,6 +33,12 @@ namespace Xedekop.Server.Data
             base.OnModelCreating(builder);
 
             // Sets as money type.
+            builder.Entity<IdentityRole<int>>
+            (iR => 
+            {
+                iR.Property(r => r.Id).ValueGeneratedOnAdd();
+            });
+
             builder.Entity<Pokemon>().Property(p => p.Price).HasColumnType("money");
             builder.Entity<OrderItem>().Property(oI => oI.UnitPrice).HasColumnType("money");
         }
