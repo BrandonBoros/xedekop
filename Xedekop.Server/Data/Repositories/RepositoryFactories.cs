@@ -63,7 +63,7 @@ namespace Xedekop.Server.Data.Repositories
         /// </summary>
         /// <typeparam name="T">The generic type.</typeparam>
         /// <returns>Gets the repository factory for the entity type.</returns>
-        public Func<AppDbContext, object> GetRepositoryFactoryForEntityType<T>() where T : class
+        public Func<AppDbContext, object> GetRepositoryFactoryForEntityType<T>() where T : class, IEntity
         {
             return GetRepositoryFactory<T>() ?? DefaultEntityRepositoryFactory<T>();
         }
@@ -73,7 +73,7 @@ namespace Xedekop.Server.Data.Repositories
         /// </summary>
         /// <typeparam name="T">The generic type.</typeparam>
         /// <returns>Gets the default repository of the provided type.</returns>
-        protected virtual Func<AppDbContext, object> DefaultEntityRepositoryFactory<T>() where T : class
+        protected virtual Func<AppDbContext, object> DefaultEntityRepositoryFactory<T>() where T : class, IEntity
         {
             return dbContext => new PokeGenericRepository<T>(dbContext, new Logger<PokeGenericRepository<T>>(_loggerFactory));
         }

@@ -12,7 +12,7 @@
         /// </summary>
         /// <typeparam name="T">The type of the IPokeRepositoy we need.</typeparam>
         /// <returns>The correct IPokeRepository.</returns>
-        IPokeRepository<T>? GetRepositoryForEntityType<T>() where T : class;
+        IPokeRepository<T>? GetRepositoryForEntityType<T>() where T : class, IEntity;
 
         /// <summary>
         /// Gets the Repository of a targeted type.
@@ -27,6 +27,6 @@
         /// </summary>
         /// <typeparam name="T">The type of the Repository.</typeparam>
         /// <param name="repository">The Repository of type T.</param>
-        void SetRepository<T>(T repository) where T : class;
+        void SetRepository<T>(T repository) where T : class, IEntity;
     }
 }

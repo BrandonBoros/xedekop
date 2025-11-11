@@ -3,7 +3,7 @@ using Xedekop.Server.Data.Interfaces;
 
 namespace Xedekop.Server.Data.Repositories
 {
-    public class PokeGenericRepository<T> : IPokeRepository<T> where T: class
+    public class PokeGenericRepository<T> : IPokeRepository<T> where T: class, IEntity
     {
         #region Properties
         protected readonly AppDbContext _db;
@@ -44,6 +44,13 @@ namespace Xedekop.Server.Data.Repositories
                 _logger.LogError($"Failed to get products: {ex}");
                 return null;
             }
+        }
+
+        public T GetByID(int idToFind)
+        {
+            T item = _dbSet.ToList().FirstOrDefault(item => item.Id == idToFind);
+
+            return item;
         }
         #endregion Methods
     }
