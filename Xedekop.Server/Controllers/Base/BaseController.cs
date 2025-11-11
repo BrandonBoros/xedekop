@@ -16,7 +16,10 @@ namespace Xedekop.Server.Controllers.Base
             _repository = repository;
         }
 
-        // GET: BaseController
+        /// <summary>
+        /// Gets all items from the db for a specific entity
+        /// </summary>
+        /// <returns>A Status 200 reponse containing all of the entities in the database.</returns>
         [HttpGet]
         public virtual IActionResult GetAll()
         {
@@ -25,6 +28,11 @@ namespace Xedekop.Server.Controllers.Base
             return Ok(results);            
         }
 
+        /// <summary>
+        /// Gets an item from the db that has a specific Id.
+        /// </summary>
+        /// <param name="id">The id to match.</param>
+        /// <returns>A Status 200 reponse containing the matching item, or a 404 response if the item isn't found.</returns>
         [HttpGet("{id}")]
         public virtual IActionResult GetById(int id)
         {
