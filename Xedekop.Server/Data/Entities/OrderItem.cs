@@ -1,10 +1,12 @@
-﻿namespace Xedekop.Server.Data.Entities
+﻿using Xedekop.Server.Data.Interfaces;
+
+namespace Xedekop.Server.Data.Entities
 {
     /// <summary>
     /// OrderItem of an Order.
     /// The thing the user is buying and how much.
     /// </summary>
-    public class OrderItem
+    public class OrderItem : IEntity
     {
         /// <summary>
         /// The Primary Key of the OrderItem.

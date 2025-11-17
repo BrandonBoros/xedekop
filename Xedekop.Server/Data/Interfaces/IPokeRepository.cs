@@ -3,5 +3,7 @@
     public interface IPokeRepository<T> where T : class
     {
         IEnumerable<T> GetAll();
+
+        T GetByID(int id);
     }
 }

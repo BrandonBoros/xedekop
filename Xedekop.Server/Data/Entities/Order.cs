@@ -1,10 +1,12 @@
-﻿namespace Xedekop.Server.Data.Entities
+﻿using Xedekop.Server.Data.Interfaces;
+
+namespace Xedekop.Server.Data.Entities
 {
     /// <summary>
     /// Pokemon order.
     /// Contains Order Id, time of Order, and ICollection of OrderItems.
     /// </summary>
-    public class Order
+    public class Order : IEntity
     {
         /// <summary>
         /// Primary key of the Order.

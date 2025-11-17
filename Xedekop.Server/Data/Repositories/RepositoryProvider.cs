@@ -30,7 +30,8 @@ namespace Xedekop.Server.Data.Repositories
         /// </summary>
         /// <typeparam name="T">The generic entity type.</typeparam>
         /// <returns>Gets the repository of the provided entity type.</returns>
-        public IPokeRepository<T>? GetRepositoryForEntityType<T>() where T : class
+        /// 
+        public IPokeRepository<T>? GetRepositoryForEntityType<T>() where T : class, IEntity
         {
             return GetRepository<IPokeRepository<T>>(_repositoryFactories.GetRepositoryFactoryForEntityType<T>());
         }
@@ -79,7 +80,7 @@ namespace Xedekop.Server.Data.Repositories
         /// </summary>
         /// <typeparam name="T">The type of the repository.</typeparam>
         /// <param name="repository">The repository to set.</param>
-        public void SetRepository<T>(T repository) where T : class
+        public void SetRepository<T>(T repository) where T : class, IEntity
         {
             Repositories[typeof(T)] = repository;
         }

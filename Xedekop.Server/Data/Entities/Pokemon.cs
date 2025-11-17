@@ -1,4 +1,6 @@
-﻿namespace Xedekop.Server.Data.Entities
+﻿using Xedekop.Server.Data.Interfaces;
+
+namespace Xedekop.Server.Data.Entities
 {
     public enum Type
     {
@@ -22,7 +24,7 @@
         Fairy
     }
 
-    public class Pokemon
+    public class Pokemon : IEntity
     {
         /// <summary>
         /// The Primary Key of the Pokemon (pokedex number).
