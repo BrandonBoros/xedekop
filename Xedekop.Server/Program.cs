@@ -1,6 +1,9 @@
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using Xedekop.Server.Data;
 using Xedekop.Server.Data.Entities;
 using Xedekop.Server.Data.Interfaces;
@@ -16,19 +19,54 @@ namespace Xedekop.Server
 
             // Add services to the container.
 
+            // Authentication
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                    ValidAudience = builder.Configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
+
+            // Cors, this IS NEEDED to prevent front end issue (since the frontend is technically separate from asp net)
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:5173")
+                               .AllowAnyHeader()
+                               .AllowAnyMethod()
+                               .AllowCredentials();
+                    });
+            });
+
             // Gets the connection string from appsettings.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             
             // Uses the connection string.
             builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
-            builder.Services.AddIdentity<AppUser, IdentityRole<int>>(options => options.SignIn.RequireConfirmedAccount = true)
+            builder.Services.AddIdentity<AppUser, IdentityRole<int>>(options => options.SignIn.RequireConfirmedAccount = false)
             .AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddAuthorization();
 
             builder.Services.AddTransient<PokeSeeder>();
 
@@ -62,7 +100,8 @@ namespace Xedekop.Server
             }
 
             app.UseHttpsRedirection();
-
+            app.UseCors("AllowSpecificOrigin");
+            app.UseAuthentication();
             app.UseAuthorization();
 
 

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Xedekop.Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b877e74667cc3857a1acb439b5e0d1d528af89f5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+897759e1a6f44680d86470dee0d2c66fa2b312c4")]
 [assembly: System.Reflection.AssemblyProductAttribute("Xedekop.Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Xedekop.Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
