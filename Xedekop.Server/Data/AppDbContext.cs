@@ -5,7 +5,7 @@ using Xedekop.Server.Data.Entities;
 
 namespace Xedekop.Server.Data
 {
-    public class AppDbContext : IdentityDbContext<AppUser, IdentityRole<int>, int>
+    public class AppDbContext : IdentityDbContext<AppUser, AppRole, int>
     {
         /// <summary>
         /// Constructor for AppDbContext used in our webapp.
@@ -33,7 +33,7 @@ namespace Xedekop.Server.Data
             base.OnModelCreating(builder);
 
             // Sets as money type.
-            builder.Entity<IdentityRole<int>>
+            builder.Entity<AppRole>
             (iR => 
             {
                 iR.Property(r => r.Id).ValueGeneratedOnAdd();

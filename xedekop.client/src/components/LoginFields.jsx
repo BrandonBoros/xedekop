@@ -3,8 +3,10 @@ import api from "../api/api";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
 import { Button } from "primereact/button";
+import { useAuth } from "../auth/AuthContext";
 
 export default function LoginFields({ navigate }) {
+    const { login } = useAuth();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
@@ -26,18 +28,16 @@ export default function LoginFields({ navigate }) {
                 password
             });
 
-            localStorage.setItem("token", response.data.token);
+            login(response.data.token);
             navigate("/shop")
         } catch (err) {
             const data = err.response?.data;
 
             if (Array.isArray(data)) {
                 setError(data.map(e => e.description).join("\n"));
-            }
-            else if (typeof data === "object") {
-                setError(data.title || "Login failed");
-            }
-            else {
+            } else if (typeof data === "object") {
+                setError(data.detail || data.title || JSON.stringify(data));
+            } else {
                 setError(data || "Login failed");
             }
         }

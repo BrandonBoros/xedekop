@@ -59,7 +59,7 @@ namespace Xedekop.Server
             // Uses the connection string.
             builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
-            builder.Services.AddIdentity<AppUser, IdentityRole<int>>(options => options.SignIn.RequireConfirmedAccount = false)
+            builder.Services.AddIdentity<AppUser, AppRole>(options => options.SignIn.RequireConfirmedAccount = false)
             .AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();
 

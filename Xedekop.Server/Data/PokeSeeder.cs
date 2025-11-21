@@ -11,11 +11,11 @@ namespace Xedekop.Server.Data
         private readonly AppDbContext _db;
         private readonly IWebHostEnvironment _hosting;
         private readonly UserManager<AppUser> _userManager;
-        private readonly RoleManager<IdentityRole<int>> _roleManager;
+        private readonly RoleManager<AppRole> _roleManager;
         #endregion Properties
 
         #region Contructors
-        public PokeSeeder(AppDbContext context,IWebHostEnvironment hosting, UserManager<AppUser> userManager, RoleManager<IdentityRole<int>> roleManager)
+        public PokeSeeder(AppDbContext context,IWebHostEnvironment hosting, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
         {
             _db = context;
             _hosting = hosting;
@@ -32,9 +32,9 @@ namespace Xedekop.Server.Data
 
             if (!_roleManager.Roles.Any())
             {
-                await _roleManager.CreateAsync(new IdentityRole<int>("Admin"));
-                await _roleManager.CreateAsync(new IdentityRole<int>("Normal"));
-                await _roleManager.CreateAsync(new IdentityRole<int>("Supervisor"));
+                await _roleManager.CreateAsync(new AppRole() { Name = "Admin"});
+                await _roleManager.CreateAsync(new AppRole() { Name = "Normal" });
+                await _roleManager.CreateAsync(new AppRole() { Name = "Supervisor" });
             }
 
             if (!_userManager.Users.Any())
@@ -55,7 +55,7 @@ namespace Xedekop.Server.Data
 
                 // get all pokemon
                 var pokemonPage = pokeClient.GetAllNamedResourcesAsync<PokeApiNet.Pokemon>();
-                
+
                 await foreach (var pokemonResource in pokemonPage)
                 {
                     var pokemon = await pokeClient.GetResourceAsync<PokeApiNet.Pokemon>(pokemonResource.Name);
@@ -97,11 +97,13 @@ namespace Xedekop.Server.Data
                     }
                 };
 
+
                 _db.Orders.Add(order);
 
                 _db.SaveChanges();  //commit changes to the database (make permanent) 
             }
         }
+
         #endregion Seeding Method
 
 

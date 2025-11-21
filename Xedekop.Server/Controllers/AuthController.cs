@@ -16,12 +16,14 @@ namespace Xedekop.Server.Controllers
         private readonly IConfiguration _config;
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly RoleManager<AppRole> _roleManager;
 
-        public AuthController(IConfiguration config, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        public AuthController(IConfiguration config, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<AppRole> roleManager)
         {
             _config = config;
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
         }
 
         [HttpPost("login")]
@@ -31,8 +33,9 @@ namespace Xedekop.Server.Controllers
             if (user == null)
                 return Unauthorized("Invalid username or password");
 
-            var result = await _signInManager.CheckPasswordSignInAsync(user, login.Password, false);
-            if (!result.Succeeded)
+            var result = await _userManager.CheckPasswordAsync(user, login.Password);
+
+            if (!result)
                 return Unauthorized("Invalid username or password");
 
             var token = GenerateJwtToken(user);
@@ -60,9 +63,15 @@ namespace Xedekop.Server.Controllers
             var result = await _userManager.CreateAsync(user, registration.Password);
 
             if (!result.Succeeded)
-            {
                 return BadRequest(result.Errors);
+
+            const string defaultRole = "Normal";
+            if (!await _roleManager.RoleExistsAsync(defaultRole))
+            {
+                await _roleManager.CreateAsync(new AppRole { Name = defaultRole });
             }
+
+            await _userManager.AddToRoleAsync(user, defaultRole);
 
             var token = GenerateJwtToken(user);
             return Ok(new { token });

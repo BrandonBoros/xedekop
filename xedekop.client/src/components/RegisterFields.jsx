@@ -3,8 +3,10 @@ import api from "../api/api";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
 import { Button } from "primereact/button";
+import { useAuth } from "../auth/AuthContext";
 
 export default function RegisterFields({ navigate }) {
+    const { login } = useAuth();
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -28,7 +30,7 @@ export default function RegisterFields({ navigate }) {
                 password,
             });
 
-            localStorage.setItem("token", response.data.token);
+            login(response.data.token);
             navigate("/shop");
         } catch (err) {
             const data = err.response?.data;
