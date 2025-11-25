@@ -11,7 +11,11 @@ export default function ShopItems() {
     const [layout, setLayout] = useState('grid');
     const [loading, setLoading] = useState(true);
 
+    const [savedProducts, setSavedProducts] = useState([]);
     const [sortKey, setSortKey] = useState('id');
+    const [filterKey, setFilterKey] = useState('');
+
+
     const [sortOrder, setSortOrder] = useState(0);
     const [sortField, setSortField] = useState('');
     const sortOptions = [
@@ -20,10 +24,33 @@ export default function ShopItems() {
         { label: 'Price Low to High', value: 'price' }
     ];
 
+    const filterOptions = [
+        { label: "None", value: "" },   
+        { label: "Normal", value: "Normal" },
+        { label: "Fire", value: "Fire" },
+        { label: "Water", value: "Water" },
+        { label: "Electric", value: "Electric" },
+        { label: "Grass", value: "Grass" },
+        { label: "Ice", value: "Ice" },
+        { label: "Fighting", value: "Fighting" },
+        { label: "Poison", value: "Poison" },
+        { label: "Ground", value: "Ground" },
+        { label: "Flying", value: "Flying" },
+        { label: "Psychic", value: "Psychic" },
+        { label: "Bug", value: "Bug" },
+        { label: "Rock", value: "Rock" },
+        { label: "Ghost", value: "Ghost" },
+        { label: "Dragon", value: "Dragon" },
+        { label: "Dark", value: "Dark" },
+        { label: "Steel", value: "Steel" },
+        { label: "Fairy", value: "Fairy" },
+    ];
+
     useEffect(() => {
         setLoading(true);
         getPokemons().then(data => {
             setProducts(data);
+            setSavedProducts(data)
             setLoading(false);
         });
     }, []);
@@ -44,6 +71,19 @@ export default function ShopItems() {
             setSortOrder(1);
             setSortField(value);
             setSortKey(value);
+        }
+    };
+
+    const onFilterChange = (event) => {
+        const value = event.value;
+
+        setFilterKey(value)
+
+        if (value.value === '') {
+            setProducts(savedProducts)
+        }
+        else {
+            setProducts(savedProducts.filter((pokemon) => pokemon.type1 === value))
         }
     };
 
@@ -158,6 +198,10 @@ export default function ShopItems() {
         <div className="flex justify-content-between align-items-center">
             <Dropdown options={sortOptions} value={sortKey} optionLabel="label"
                 placeholder="Sort By..." onChange={onSortChange} className="w-full sm:w-14rem" />
+
+            <Dropdown options={filterOptions} value={filterKey} optionLabel="label"
+                placeholder="Filter type..." onChange={onFilterChange} className="w-full sm:w-14rem" />
+
             <DataViewLayoutOptions layout={layout} onChange={(e) => setLayout(e.value)} />
         </div>
     );
@@ -170,6 +214,7 @@ export default function ShopItems() {
                 layout={layout}
                 paginator
                 rows={30}
+                totalRecord={ }
                 header={header()}
                 sortField={sortField}
                 sortOrder={sortOrder}
