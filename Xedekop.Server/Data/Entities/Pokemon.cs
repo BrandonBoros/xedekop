@@ -34,12 +34,12 @@ namespace Xedekop.Server.Data.Entities
         /// <summary>
         /// The Name of the Pokemon.
         /// </summary>
-        public string Name { get; set; }
+        public required string Name { get; set; }
 
         /// <summary>
         /// The First Type of the Pokemon.
         /// </summary>
-        public string Type1 { get; set; }
+        public required string Type1 { get; set; }
 
         /// <summary>
         /// The Second Type, if exists of the Pokemon.
@@ -51,6 +51,14 @@ namespace Xedekop.Server.Data.Entities
         /// </summary>
         public decimal Price { get; set; }
 
-        // pokemon image url
+        /// <summary>
+        /// Normal sprite of pokemon.
+        /// </summary>
+        public required string Sprite { get; set; }
+
+        /// <summary>
+        /// Shiny sprite of pokemon.
+        /// </summary>
+        public required string ShinySprite { get; set; }
     }
 }

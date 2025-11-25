@@ -1,1 +1,24 @@
-{"Version":1,"Hash":"dloCCW9gq7Q/4uMW1gpUy3pLUNT3rWuo1MZUNGQN2tc=","Source":"Xedekop.Server","BasePath":"_content/Xedekop.Server","Mode":"Default","ManifestType":"Build","ReferencedProjectsConfiguration":[{"Identity":"C:\\Users\\Asus\\Source\\Repos\\Xedekop\\xedekop.client\\xedekop.client.esproj","Version":2,"Source":"xedekop.client","GetPublishAssetsTargets":"GetCurrentProjectPublishStaticWebAssetItems","AdditionalPublishProperties":"Configuration=Debug;Platform=AnyCPU","AdditionalPublishPropertiesToRemove":"WebPublishProfileFile;TargetFramework","GetBuildAssetsTargets":"GetCurrentProjectBuildStaticWebAssetItems","AdditionalBuildProperties":"Configuration=Debug;Platform=AnyCPU","AdditionalBuildPropertiesToRemove":"WebPublishProfileFile;TargetFramework"}],"DiscoveryPatterns":[],"Assets":[],"Endpoints":[]}
+{
+  "Version": 1,
+  "Hash": "qDM8DhclyijK/NoVvgDpN7690BMdVseS5U7YOB9cy3k=",
+  "Source": "Xedekop.Server",
+  "BasePath": "_content/Xedekop.Server",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [
+    {
+      "Identity": "C:\\Users\\2377215\\Source\\Repos\\Xedekop4\\xedekop.client\\xedekop.client.esproj",
+      "Version": 2,
+      "Source": "xedekop.client",
+      "GetPublishAssetsTargets": "GetCurrentProjectPublishStaticWebAssetItems",
+      "AdditionalPublishProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;TargetFramework",
+      "GetBuildAssetsTargets": "GetCurrentProjectBuildStaticWebAssetItems",
+      "AdditionalBuildProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;TargetFramework"
+    }
+  ],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

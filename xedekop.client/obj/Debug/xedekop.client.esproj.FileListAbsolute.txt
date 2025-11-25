@@ -1,3 +1,4 @@
 C:\Users\2377215\source\repos\Xedekop\xedekop.client\obj\Debug\xedekop.client.esproj.CoreCompileInputs.cache
 C:\Users\2377215\Source\Repos\Xedekop1\xedekop.client\obj\Debug\xedekop.client.esproj.CoreCompileInputs.cache
 C:\Users\Asus\Source\Repos\Xedekop\xedekop.client\obj\Debug\xedekop.client.esproj.CoreCompileInputs.cache
+C:\Users\2377215\Source\Repos\Xedekop4\xedekop.client\obj\Debug\xedekop.client.esproj.CoreCompileInputs.cache

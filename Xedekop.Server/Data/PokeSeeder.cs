@@ -47,37 +47,58 @@ namespace Xedekop.Server.Data
             // If there are no Pokemon, seed.
             if (!_db.Pokemons.Any())
             {
-
                 // get pokeapi client
                 PokeApiClient pokeClient = new PokeApiClient();
 
-                List<Entities.Pokemon> pokemons = new List<Entities.Pokemon>();
+                var page = await pokeClient.GetNamedResourcePageAsync<PokeApiNet.Pokemon>(100, 0);
+                List<Entities.Pokemon> pokemons = new();
 
-                // get all pokemon
-                var pokemonPage = pokeClient.GetAllNamedResourcesAsync<PokeApiNet.Pokemon>();
-
-                await foreach (var pokemonResource in pokemonPage)
+                // We were getting rate limited so we needed to change it to use pages.
+                while (page != null)
                 {
-                    var pokemon = await pokeClient.GetResourceAsync<PokeApiNet.Pokemon>(pokemonResource.Name);
-
-                    // get rid of regional forms
-                    if (pokemon.IsDefault)
+                    foreach (var item in page.Results)
                     {
-                        // pokemon types
-                        Entities.Type?[] types = GetTypes(pokemon);
+                        PokeApiNet.Pokemon pokemon;
 
-                        Entities.Pokemon tempPoke = new Entities.Pokemon()
+                        try
+                        {
+                            pokemon = await pokeClient.GetResourceAsync<PokeApiNet.Pokemon>(item.Name);
+                        }
+                        catch
+                        {
+                            await Task.Delay(500);
+                            pokemon = await pokeClient.GetResourceAsync<PokeApiNet.Pokemon>(item.Name);
+                        }
+
+                        if (!pokemon.IsDefault) continue;
+
+                        var types = GetTypes(pokemon);
+
+                        pokemons.Add(new Entities.Pokemon()
                         {
                             Name = GetName(pokemon),
                             Type1 = types[0].ToString()!,
-                            Type2 = types[1] == null ? null : types[1].ToString(),
-                            Price = pokemon.Stats[0].BaseStat
-                            //img soon
-                        };
-
-                        pokemons.Add(tempPoke);
+                            Type2 = types[1]?.ToString(),
+                            Price = pokemon.Stats[0].BaseStat,
+                            Sprite = pokemon.Sprites.FrontDefault,
+                            ShinySprite = pokemon.Sprites.FrontShiny
+                        });
                     }
+
+                    // Stop if no more pages
+                    if (page.Next == null)
+                        break;
+
+                    // Extract offset & limit from "Next" URL
+                    var nextUrl = new Uri(page.Next);
+                    var query = System.Web.HttpUtility.ParseQueryString(nextUrl.Query);
+
+                    int nextLimit = int.Parse(query["limit"]);
+                    int nextOffset = int.Parse(query["offset"]);
+
+                    page = await pokeClient.GetNamedResourcePageAsync<PokeApiNet.Pokemon>(nextLimit, nextOffset);
                 }
+
 
                 //Add the new list of products to the database
                 _db.Pokemons.AddRange(pokemons);
@@ -97,7 +118,6 @@ namespace Xedekop.Server.Data
                     }
                 };
 
-
                 _db.Orders.Add(order);
 
                 _db.SaveChanges();  //commit changes to the database (make permanent) 
@@ -105,7 +125,6 @@ namespace Xedekop.Server.Data
         }
 
         #endregion Seeding Method
-
 
         #region Helper Methods
         /// <summary>

@@ -1,6 +1,7 @@
 import { useAuth } from "../auth/AuthContext";
 import { Button } from "primereact/button";
 import { useNavigate } from "react-router-dom";
+import ShopItems from "../components/ShopItems"
 
 export default function Shop() {
     const { logout } = useAuth();
@@ -23,6 +24,8 @@ export default function Shop() {
                     className="mt-3"
                     onClick={handleLogout}
                 />
+
+                <ShopItems />
             </div>
         </div>
     );
