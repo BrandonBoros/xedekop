@@ -19,21 +19,17 @@ export default function ShopItems() {
     const [layout, setLayout] = useState('grid');
     const [loading, setLoading] = useState(true);
 
-    const [savedProducts, setSavedProducts] = useState([]);
-    const [sortKey, setSortKey] = useState('id');
-    const [filterKey, setFilterKey] = useState('');
+    const [sortKey, setSortKey] = useState("null");
+    const [filterKey, setFilterKey] = useState("null");
 
-
-    const [sortOrder, setSortOrder] = useState(0);
-    const [sortField, setSortField] = useState('');
     const sortOptions = [
-        { label: 'Pokedex Number', value: "id" },
-        { label: 'Price High to Low', value: '!price' },
-        { label: 'Price Low to High', value: 'price' }
+        { label: 'Pokedex Number', value: "null" },
+        { label: 'Price High to Low', value: 'priceDESC' },
+        { label: 'Price Low to High', value: 'priceASC' }
     ];
 
     const filterOptions = [
-        { label: "None", value: "" },   
+        { label: "None", value: "null" },   
         { label: "Normal", value: "Normal" },
         { label: "Fire", value: "Fire" },
         { label: "Water", value: "Water" },
@@ -56,9 +52,8 @@ export default function ShopItems() {
 
     useEffect(() => {
         setLoading(true);
-        getPaginatedPokemon(pageNumber, pageSize).then(data => {
+        getPaginatedPokemon(pageNumber, pageSize, filterKey, sortKey).then(data => {
             setProducts(data);
-            setSavedProducts(data)
             setLoading(false);
         });
     }, []);
@@ -66,19 +61,24 @@ export default function ShopItems() {
     const onSortChange = (event) => {
         const value = event.value;
 
-        if (value === 'id') {
-            setSortKey('id');
-            setSortOrder(0);
-            setSortField('');
-            return;
-        } else if (value.indexOf('!') === 0) {
-            setSortOrder(-1);
-            setSortField(value.substring(1));
+        if (value === 'null') {
             setSortKey(value);
+            getPaginatedPokemon(pageNumber, pageSize, filterKey, value).then(data => {
+                setProducts(data);
+                setLoading(false);
+            });
+        } else if (value === "sortDESC") {
+            setSortKey(value);
+            getPaginatedPokemon(pageNumber, pageSize, filterKey, value).then(data => {
+                setProducts(data);
+                setLoading(false);
+            });
         } else {
-            setSortOrder(1);
-            setSortField(value);
             setSortKey(value);
+            getPaginatedPokemon(pageNumber, pageSize, filterKey, value).then(data => {
+                setProducts(data);
+                setLoading(false);
+            });
         }
     };
 
@@ -87,11 +87,17 @@ export default function ShopItems() {
 
         setFilterKey(value)
 
-        if (value.value === '') {
-            setProducts(savedProducts)
+        if (value.value === 'null') {
+            getPaginatedPokemon(pageNumber, pageSize, value.value, sortKey).then(data => {
+                setProducts(data);
+                setLoading(false);
+            });
         }
         else {
-            setProducts(savedProducts.filter((pokemon) => pokemon.type1 === value))
+            getPaginatedPokemon(pageNumber, pageSize, value, sortKey).then(data => {
+                setProducts(data);
+                setLoading(false);
+            });
         }
     };
 
@@ -99,9 +105,8 @@ export default function ShopItems() {
         setPageNumber(event.page + 1)
         setFirst(event.first)
 
-        getPaginatedPokemon(event.page + 1, pageSize).then(data => {
+        getPaginatedPokemon(pageNumber, pageSize, filterKey, sortKey).then(data => {
             setProducts(data);
-            setSavedProducts(data)
             setLoading(false);
         });
     }
@@ -232,8 +237,6 @@ export default function ShopItems() {
                 listTemplate={listTemplate}
                 layout={layout}
                 header={header()}
-                sortField={sortField}
-                sortOrder={sortOrder}
             />
             <Paginator first={first} rows={pageSize} totalRecords={ numberOfPokemon } onPageChange={onPageChange} />
         </div>

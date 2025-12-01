@@ -7,7 +7,7 @@ export const getPokemons = async () => {
 };
 
 // GET ALL FROM A PAGE
-export const getPaginatedPokemon = async (pageNumber, pageSize) => {
-    const res = await api.get(`/Pokemon/${pageNumber}/${pageSize}`)
+export const getPaginatedPokemon = async (pageNumber, pageSize, filterType, sort) => {
+    const res = await api.get(`/Pokemon/${pageNumber}/${pageSize}/${filterType}/${sort}`)
     return res.data
 }
