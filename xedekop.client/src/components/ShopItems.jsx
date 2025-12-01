@@ -4,9 +4,17 @@ import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
 import { Skeleton } from 'primereact/skeleton';
 import { classNames } from 'primereact/utils';
-import { getPokemons } from '../api/pokemonApi.js';
+import { getPaginatedPokemon } from '../api/pokemonApi.js';
+import { Paginator } from 'primereact/paginator';
+
 
 export default function ShopItems() {
+    const numberOfPokemon = 1025
+    const pageSize = 30
+
+    const [first, setFirst] = useState(0)
+    const [pageNumber, setPageNumber] = useState(1)
+
     const [products, setProducts] = useState([]);
     const [layout, setLayout] = useState('grid');
     const [loading, setLoading] = useState(true);
@@ -48,7 +56,7 @@ export default function ShopItems() {
 
     useEffect(() => {
         setLoading(true);
-        getPokemons().then(data => {
+        getPaginatedPokemon(pageNumber, pageSize).then(data => {
             setProducts(data);
             setSavedProducts(data)
             setLoading(false);
@@ -86,6 +94,17 @@ export default function ShopItems() {
             setProducts(savedProducts.filter((pokemon) => pokemon.type1 === value))
         }
     };
+
+    const onPageChange = (event) => {
+        setPageNumber(event.page + 1)
+        setFirst(event.first)
+
+        getPaginatedPokemon(event.page + 1, pageSize).then(data => {
+            setProducts(data);
+            setSavedProducts(data)
+            setLoading(false);
+        });
+    }
 
     const listSkeleton = () => (
         <div className="col-12">
@@ -212,13 +231,11 @@ export default function ShopItems() {
                 value={products}
                 listTemplate={listTemplate}
                 layout={layout}
-                paginator
-                rows={30}
-                totalRecord={ }
                 header={header()}
                 sortField={sortField}
                 sortOrder={sortOrder}
             />
+            <Paginator first={first} rows={pageSize} totalRecords={ numberOfPokemon } onPageChange={onPageChange} />
         </div>
     );
 }

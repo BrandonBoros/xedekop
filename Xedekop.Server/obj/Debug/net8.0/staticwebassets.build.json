@@ -1,13 +1,13 @@
 {
   "Version": 1,
-  "Hash": "qDM8DhclyijK/NoVvgDpN7690BMdVseS5U7YOB9cy3k=",
+  "Hash": "CP0fkRJP3F/BDhPAvis+xQGr0kNTTypaKjQefENt5Tg=",
   "Source": "Xedekop.Server",
   "BasePath": "_content/Xedekop.Server",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [
     {
-      "Identity": "C:\\Users\\2377215\\Source\\Repos\\Xedekop4\\xedekop.client\\xedekop.client.esproj",
+      "Identity": "C:\\Users\\2377215\\Source\\Repos\\Xedekop5\\xedekop.client\\xedekop.client.esproj",
       "Version": 2,
       "Source": "xedekop.client",
       "GetPublishAssetsTargets": "GetCurrentProjectPublishStaticWebAssetItems",

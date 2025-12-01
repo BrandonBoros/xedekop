@@ -3,7 +3,7 @@
 "ServerUrl": "https://localhost:61681",
 "RedirectUrl": "",
 "LaunchCommand": "npm run dev",
-"WorkingDirectory": "C:\\Users\\2377215\\Source\\Repos\\Xedekop4\\Xedekop.Server\\..\\xedekop.client",
+"WorkingDirectory": "C:\\Users\\2377215\\Source\\Repos\\Xedekop5\\Xedekop.Server\\..\\xedekop.client",
 "MaxTimeoutInSeconds": "120",
 "KeepRunning": "false"
 }

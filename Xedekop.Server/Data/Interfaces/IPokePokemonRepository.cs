@@ -2,5 +2,7 @@
 
 namespace Xedekop.Server.Data.Interfaces
 {
-    public interface IPokePokemonRepository : IPokeRepository<Pokemon> { }
+    public interface IPokePokemonRepository : IPokeRepository<Pokemon> {
+        public Task<PaginatedList<Pokemon>> GetPaginatedPokemon(int pageIndex, int pageSize);
+    }
 }
