@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Xedekop.Server.Data.Repositories;
 using System.Threading.Tasks;
+using System.Drawing.Printing;
 
 namespace Xedekop.Server.Controllers
 {
@@ -19,12 +20,12 @@ namespace Xedekop.Server.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        [HttpGet("{pageIndex}/{pageSize}")]
-        public async Task<IActionResult> GetPaginatedPokemon(int pageIndex, int pageSize)
+        [HttpGet("{pageIndex}/{pageSize}/{type}/{sort}")]
+        public async Task<IActionResult> GetPaginatedPokemon(int pageIndex, int pageSize, string type, string sort)
         {
             var pokeRepo = _unitOfWork.GetRepository<IPokePokemonRepository>();
 
-            var results = await pokeRepo.GetPaginatedPokemon(pageIndex, pageSize);
+            var results = await pokeRepo.GetPaginatedPokemon(pageIndex, pageSize, type, sort);
 
             return Ok(results);
         }
