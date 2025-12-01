@@ -9,7 +9,8 @@ import { Paginator } from 'primereact/paginator';
 
 
 export default function ShopItems() {
-    const numberOfPokemon = 1025
+    const [numberOfPokemon, setNumberOfPokemon] = useState(1025);
+
     const pageSize = 30
 
     const [first, setFirst] = useState(0)
@@ -53,7 +54,9 @@ export default function ShopItems() {
     useEffect(() => {
         setLoading(true);
         getPaginatedPokemon(pageNumber, pageSize, filterKey, sortKey).then(data => {
-            setProducts(data);
+            setProducts(data[0]);
+            setNumberOfPokemon(data[1] * pageSize)
+            console.log(numberOfPokemon)
             setLoading(false);
         });
     }, []);
@@ -64,22 +67,26 @@ export default function ShopItems() {
         if (value === 'null') {
             setSortKey(value);
             getPaginatedPokemon(pageNumber, pageSize, filterKey, value).then(data => {
-                setProducts(data);
+                setProducts(data[0]);
+                setNumberOfPokemon(data[1] * pageSize)
                 setLoading(false);
             });
         } else if (value === "sortDESC") {
             setSortKey(value);
             getPaginatedPokemon(pageNumber, pageSize, filterKey, value).then(data => {
-                setProducts(data);
+                setProducts(data[0]);
+                setNumberOfPokemon(data[1] * pageSize)
                 setLoading(false);
             });
         } else {
             setSortKey(value);
             getPaginatedPokemon(pageNumber, pageSize, filterKey, value).then(data => {
-                setProducts(data);
+                setProducts(data[0]);
+                setNumberOfPokemon(data[1] * pageSize)
                 setLoading(false);
             });
         }
+
     };
 
     const onFilterChange = (event) => {
@@ -89,13 +96,15 @@ export default function ShopItems() {
 
         if (value.value === 'null') {
             getPaginatedPokemon(pageNumber, pageSize, value.value, sortKey).then(data => {
-                setProducts(data);
+                setProducts(data[0]);
+                setNumberOfPokemon(data[1] * pageSize)
                 setLoading(false);
             });
         }
         else {
             getPaginatedPokemon(pageNumber, pageSize, value, sortKey).then(data => {
-                setProducts(data);
+                setProducts(data[0]);
+                setNumberOfPokemon(data[1] * pageSize)
                 setLoading(false);
             });
         }
@@ -105,8 +114,9 @@ export default function ShopItems() {
         setPageNumber(event.page + 1)
         setFirst(event.first)
 
-        getPaginatedPokemon(pageNumber, pageSize, filterKey, sortKey).then(data => {
-            setProducts(data);
+        getPaginatedPokemon(event.page + 1, pageSize, filterKey, sortKey).then(data => {
+            setProducts(data[0]);
+            setNumberOfPokemon(data[1] * pageSize)
             setLoading(false);
         });
     }
