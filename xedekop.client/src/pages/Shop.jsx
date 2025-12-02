@@ -12,10 +12,19 @@ export default function Shop() {
         navigate("/");
     };
 
+    const handleBasket = () => {
+        navigate("/basket")
+    }
+
     return (
         <div className="flex justify-content-center align-items-center min-h-screen">
             <div className="card p-4">
                 <h1>Welcome to the Shop!</h1>
+
+                <Button
+                    icon="pi pi-shopping-cart"
+                    onClick={handleBasket }
+                />
 
                 <Button
                     label="Logout"

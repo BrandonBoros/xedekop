@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import Shop from './pages/Shop';
+import Basket from './pages/Basket';
 import 'primereact/resources/themes/lara-light-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
@@ -31,6 +32,16 @@ createRoot(document.getElementById('root')).render(
                                 </PrivateRoute>
                             }
                         />
+
+                        <Route
+                            path="/basket"
+                            element={
+                                <PrivateRoute>
+                                    <Basket />
+                                </PrivateRoute>
+                            }
+                        />
+
                         <Route path="*" element={<Navigate to="/" />} />
                     </Routes>
                 </BrowserRouter>
