@@ -8105,11 +8105,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\2377215\\Source\\Repos\\Xedekop5\\Xedekop.Server\\Xedekop.Server.csproj",
+      "projectUniqueName": "C:\\Users\\2377215\\Source\\Repos\\Xedekop6\\Xedekop.Server\\Xedekop.Server.csproj",
       "projectName": "Xedekop.Server",
-      "projectPath": "C:\\Users\\2377215\\Source\\Repos\\Xedekop5\\Xedekop.Server\\Xedekop.Server.csproj",
+      "projectPath": "C:\\Users\\2377215\\Source\\Repos\\Xedekop6\\Xedekop.Server\\Xedekop.Server.csproj",
       "packagesPath": "C:\\Users\\2377215\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\2377215\\Source\\Repos\\Xedekop5\\Xedekop.Server\\obj\\",
+      "outputPath": "C:\\Users\\2377215\\Source\\Repos\\Xedekop6\\Xedekop.Server\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

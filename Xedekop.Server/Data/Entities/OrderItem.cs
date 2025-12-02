@@ -27,10 +27,5 @@ namespace Xedekop.Server.Data.Entities
         /// The cost of the Product alone.
         /// </summary>
         public decimal UnitPrice { get; set; }
-
-        /// <summary>
-        /// The Order this item belongs to.
-        /// </summary>
-        public Order Order { get; set; }
     }
 }

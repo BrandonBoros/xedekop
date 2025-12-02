@@ -25,18 +25,21 @@ export default function Shop() {
                 <div className="flex align-items-center justify-content-between mb-3 gap-3">
                     <h1 className="pokemon-title">Pokemon Shop</h1>
 
-                    <Button
-                        icon="pi pi-shopping-cart"
-                        onClick={handleBasket}
-                    />
+                    <span>
+                        <Button
+                            icon="pi pi-shopping-cart"
+                            onClick={handleBasket}
+                            style={{ marginRight: '20px' }}
+                        />
 
-                    <Button
-                        label="Logout"
-                        icon="pi pi-sign-out"
-                        severity="danger"
-                        className="mt-3"
-                        onClick={handleLogout}
-                    />
+                        <Button
+                            label="Logout"
+                            icon="pi pi-sign-out"
+                            severity="danger"
+                            className="mt-3"
+                            onClick={handleLogout}
+                        />
+                    </span>
                 </div>
 
                 <ShopItems />
