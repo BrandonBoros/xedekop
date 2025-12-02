@@ -6,14 +6,15 @@ import { Skeleton } from 'primereact/skeleton';
 import { classNames } from 'primereact/utils';
 import { getPaginatedPokemon } from '../api/pokemonApi.js';
 import { Paginator } from 'primereact/paginator';
-
+import "../styles/shop.css";
 
 export default function ShopItems() {
-    const numberOfPokemon = 1025
-    const pageSize = 30
+    const [numberOfPokemon, setNumberOfPokemon] = useState(1025);
 
-    const [first, setFirst] = useState(0)
-    const [pageNumber, setPageNumber] = useState(1)
+    const pageSize = 30;
+
+    const [first, setFirst] = useState(0);
+    const [pageNumber, setPageNumber] = useState(1);
 
     const [products, setProducts] = useState([]);
     const [layout, setLayout] = useState('grid');
@@ -28,8 +29,8 @@ export default function ShopItems() {
         { label: 'Price Low to High', value: 'priceASC' }
     ];
 
-    const filterOptions = [
-        { label: "None", value: "null" },   
+    const filterOptions = [ /* keeping your list unchanged */
+        { label: "None", value: "null" },
         { label: "Normal", value: "Normal" },
         { label: "Fire", value: "Fire" },
         { label: "Water", value: "Water" },
@@ -47,158 +48,118 @@ export default function ShopItems() {
         { label: "Dragon", value: "Dragon" },
         { label: "Dark", value: "Dark" },
         { label: "Steel", value: "Steel" },
-        { label: "Fairy", value: "Fairy" },
+        { label: "Fairy", value: "Fairy" }
     ];
 
     useEffect(() => {
         setLoading(true);
         getPaginatedPokemon(pageNumber, pageSize, filterKey, sortKey).then(data => {
-            setProducts(data);
+            setProducts(data[0]);
+            setNumberOfPokemon(data[1] * pageSize);
             setLoading(false);
         });
     }, []);
 
     const onSortChange = (event) => {
         const value = event.value;
+        setSortKey(value);
 
-        if (value === 'null') {
-            setSortKey(value);
-            getPaginatedPokemon(pageNumber, pageSize, filterKey, value).then(data => {
-                setProducts(data);
-                setLoading(false);
-            });
-        } else if (value === "sortDESC") {
-            setSortKey(value);
-            getPaginatedPokemon(pageNumber, pageSize, filterKey, value).then(data => {
-                setProducts(data);
-                setLoading(false);
-            });
-        } else {
-            setSortKey(value);
-            getPaginatedPokemon(pageNumber, pageSize, filterKey, value).then(data => {
-                setProducts(data);
-                setLoading(false);
-            });
-        }
+        setLoading(true);
+        getPaginatedPokemon(pageNumber, pageSize, filterKey, value).then(data => {
+            setProducts(data[0]);
+            setNumberOfPokemon(data[1] * pageSize);
+            setLoading(false);
+        });
     };
 
     const onFilterChange = (event) => {
         const value = event.value;
 
-        setFilterKey(value)
+        setFilterKey(value);
+        setLoading(true);
 
-        if (value.value === 'null') {
-            getPaginatedPokemon(pageNumber, pageSize, value.value, sortKey).then(data => {
-                setProducts(data);
-                setLoading(false);
-            });
-        }
-        else {
-            getPaginatedPokemon(pageNumber, pageSize, value, sortKey).then(data => {
-                setProducts(data);
-                setLoading(false);
-            });
-        }
+        getPaginatedPokemon(pageNumber, pageSize, value, sortKey).then(data => {
+            setProducts(data[0]);
+            setNumberOfPokemon(data[1] * pageSize);
+            setLoading(false);
+        });
     };
 
     const onPageChange = (event) => {
-        setPageNumber(event.page + 1)
-        setFirst(event.first)
+        setPageNumber(event.page + 1);
+        setFirst(event.first);
 
-        getPaginatedPokemon(pageNumber, pageSize, filterKey, sortKey).then(data => {
-            setProducts(data);
+        setLoading(true);
+        getPaginatedPokemon(event.page + 1, pageSize, filterKey, sortKey).then(data => {
+            setProducts(data[0]);
+            setNumberOfPokemon(data[1] * pageSize);
             setLoading(false);
         });
-    }
+    };
 
-    const listSkeleton = () => (
-        <div className="col-12">
-            <div className="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4 border-top-1 surface-border">
-                <Skeleton className="w-9 sm:w-16rem xl:w-10rem shadow-2 h-6rem block border-round" />
+    /* --- ITEM STYLING --- */
+
+    const listItem = (product, index) => (
+        <div className="col-12" key={product.id}>
+            <div className={classNames('pokemon-card flex flex-column xl:flex-row xl:align-items-start p-4 gap-4',
+                { 'border-top-1 surface-border': index !== 0 })}>
+
+                <img
+                    className="w-9 sm:w-16rem xl:w-10rem sprite-hover border-round"
+                    src={product.sprite}
+                    alt={product.name}
+                />
+
                 <div className="flex flex-column sm:flex-row justify-content-between flex-1 gap-4">
                     <div className="flex flex-column gap-3">
-                        <Skeleton className="w-8rem h-2rem" />
-                        <Skeleton className="w-6rem h-1rem" />
-                    </div>
-                    <div className="flex flex-column align-items-end gap-3">
-                        <Skeleton className="w-4rem h-2rem" />
-                        <Skeleton shape="circle" className="w-3rem h-3rem" />
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-
-    const gridSkeleton = () => (
-        <div className="col-12 sm:col-6 lg:col-12 xl:col-4 p-2">
-            <div className="p-4 border-1 surface-border surface-card border-round">
-                <Skeleton className="w-6rem h-1rem" />
-                <div className="flex flex-column align-items-center gap-3 py-5">
-                    <Skeleton className="w-9 h-10rem border-round" />
-                    <Skeleton className="w-8rem h-2rem" />
-                    <Skeleton className="w-6rem h-1rem" />
-                </div>
-                <div className="flex justify-content-between">
-                    <Skeleton className="w-4rem h-2rem" />
-                    <Skeleton shape="circle" className="w-3rem h-3rem" />
-                </div>
-            </div>
-        </div>
-    );
-
-    const listItem = (product, index) => {
-        return (
-            <div className="col-12" key={product.id}>
-                <div className={classNames('flex flex-column xl:flex-row xl:align-items-start p-4 gap-4', { 'border-top-1 surface-border': index !== 0 })}>
-                    <img className="w-9 sm:w-16rem xl:w-10rem shadow-2 block mx-auto border-round" src={product.sprite} alt={product.name} />
-
-                    <div className="flex flex-column sm:flex-row justify-content-between flex-1 gap-4">
-                        <div className="flex flex-column gap-3">
-                            <div className="text-2xl font-bold">{product.name}</div>
-                            <div className="flex gap-3">
-                                <i className="pi pi-tag"></i>
-                                <span>{product.type1} {product.type2}</span>
-                            </div>
-                        </div>
-
-                        <div className="flex flex-column align-items-end gap-3">
-                            <span className="text-2xl font-semibold">${product.price}</span>
-                            <Button icon="pi pi-shopping-cart" className="p-button-rounded" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
-    };
-
-    const gridItem = (product) => {
-        return (
-            <div className="col-12 sm:col-6 lg:col-12 xl:col-4 p-2" key={product.id}>
-                <div className="p-4 border-1 surface-border surface-card border-round">
-                    <div className="flex align-items-center gap-2">
-                        <i className="pi pi-tag"></i>
-                        <span>{product.type1} {product.type2}</span>
-                    </div>
-
-                    <div className="flex flex-column align-items-center gap-3 py-5">
-                        <img className="w-9 shadow-2 border-round" src={product.sprite} alt={product.name} />
                         <div className="text-2xl font-bold">{product.name}</div>
+
+                        <div className="flex gap-2">
+                            <span className={`type-chip type-${product.type1}`}>{product.type1}</span>
+                            {product.type2 && (
+                                <span className={`type-chip type-${product.type2}`}>{product.type2}</span>
+                            )}
+                        </div>
                     </div>
 
-                    <div className="flex justify-content-between">
+                    <div className="flex flex-column align-items-end gap-3">
                         <span className="text-2xl font-semibold">${product.price}</span>
-                        <Button icon="pi pi-shopping-cart" className="p-button-rounded" />
+                        <Button icon="pi pi-shopping-cart" className="p-button-rounded p-button-sm" />
                     </div>
                 </div>
             </div>
-        );
-    };
+        </div>
+    );
+
+    const gridItem = (product) => (
+        <div className="col-12 sm:col-6 lg:col-4 p-3" key={product.id}>
+            <div className="pokemon-card p-4 text-center">
+
+                <div className="flex justify-content-center gap-2 mb-2">
+                    <span className={`type-chip type-${product.type1}`}>{product.type1}</span>
+                    {product.type2 && (
+                        <span className={`type-chip type-${product.type2}`}>{product.type2}</span>
+                    )}
+                </div>
+
+                <img
+                    className="w-9 sprite-hover border-round mb-3"
+                    src={product.sprite}
+                    alt={product.name}
+                />
+
+                <div className="text-2xl font-bold mb-3">{product.name}</div>
+
+                <div className="flex justify-content-between align-items-center">
+                    <span className="text-2xl font-semibold">${product.price}</span>
+                    <Button icon="pi pi-shopping-cart" className="p-button-rounded p-button-sm" />
+                </div>
+            </div>
+        </div>
+    );
 
     const itemTemplate = (product, layout, index) => {
-        if (loading) {
-            return layout === 'list' ? listSkeleton() : gridSkeleton();
-        }
-
+        if (loading) return <Skeleton className="w-full h-10rem border-round" />;
         if (!product) return;
 
         return layout === 'list'
@@ -206,39 +167,30 @@ export default function ShopItems() {
             : gridItem(product);
     };
 
-    const listTemplate = (items, layout) => {
-        const displayItems = loading
-            ? Array.from({ length: 6 })
-            : items;
-
-        return (
-            <div className="grid grid-nogutter">
-                {displayItems.map((item, i) => itemTemplate(item, layout, i))}
-            </div>
-        );
-    };
-
     const header = () => (
-        <div className="flex justify-content-between align-items-center">
-            <Dropdown options={sortOptions} value={sortKey} optionLabel="label"
-                placeholder="Sort By..." onChange={onSortChange} className="w-full sm:w-14rem" />
-
-            <Dropdown options={filterOptions} value={filterKey} optionLabel="label"
-                placeholder="Filter type..." onChange={onFilterChange} className="w-full sm:w-14rem" />
-
+        <div className="flex justify-content-between align-items-center mb-3">
+            <Dropdown options={sortOptions} value={sortKey} onChange={onSortChange} className="w-full sm:w-14rem" />
+            <Dropdown options={filterOptions} value={filterKey} onChange={onFilterChange} className="w-full sm:w-14rem" />
             <DataViewLayoutOptions layout={layout} onChange={(e) => setLayout(e.value)} />
         </div>
     );
 
     return (
-        <div className="card">
+        <div>
             <DataView
                 value={products}
-                listTemplate={listTemplate}
                 layout={layout}
                 header={header()}
+                itemTemplate={itemTemplate}
             />
-            <Paginator first={first} rows={pageSize} totalRecords={ numberOfPokemon } onPageChange={onPageChange} />
+
+            <Paginator
+                first={first}
+                rows={pageSize}
+                totalRecords={numberOfPokemon}
+                onPageChange={onPageChange}
+                className="mt-3"
+            />
         </div>
     );
 }

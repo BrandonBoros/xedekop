@@ -1,0 +1,124 @@
+.pokemon-card {
+    border-radius: 18px;
+    border: 2px solid #e0e0e0;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.pokemon-card-shop {
+    border-radius: 18px;
+    border: 2px solid #e0e0e0;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.pokemon-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+}
+
+.pokemon-title {
+    font-family: 'Arial Rounded MT Bold', sans-serif;
+    color: #ef5350;
+    text-shadow: 0 2px 3px rgba(0,0,0,0.2);
+}
+
+.pokeball-icon {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: radial-gradient(circle, white 50%, #ef5350 50%);
+    border: 2px solid #333;
+    margin-right: 8px;
+}
+
+.type-chip {
+    padding: 3px 10px;
+    border-radius: 12px;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.type-Normal {
+    background: #A8A77A;
+}
+
+.type-Fire {
+    background: #EE8130;
+}
+
+.type-Water {
+    background: #6390F0;
+}
+
+.type-Electric {
+    background: #F7D02C;
+}
+
+.type-Grass {
+    background: #7AC74C;
+}
+
+.type-Ice {
+    background: #96D9D6;
+    color: #1d1d1d;
+}
+
+.type-Fighting {
+    background: #C22E28;
+}
+
+.type-Poison {
+    background: #A33EA1;
+}
+
+.type-Ground {
+    background: #E2BF65;
+}
+
+.type-Flying {
+    background: #A98FF3;
+}
+
+.type-Psychic {
+    background: #F95587;
+}
+
+.type-Bug {
+    background: #A6B91A;
+}
+
+.type-Rock {
+    background: #B6A136;
+}
+
+.type-Ghost {
+    background: #735797;
+}
+
+.type-Dragon {
+    background: #6F35FC;
+}
+
+.type-Dark {
+    background: #705746;
+}
+
+.type-Steel {
+    background: #B7B7CE;
+    color: #1d1d1d;
+}
+
+.type-Fairy {
+    background: #D685AD;
+}
+
+.sprite-hover:hover {
+    transform: scale(1.07);
+    transition: 0.2s ease;
+}

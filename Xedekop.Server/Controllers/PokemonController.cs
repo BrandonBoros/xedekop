@@ -23,11 +23,16 @@ namespace Xedekop.Server.Controllers
         [HttpGet("{pageIndex}/{pageSize}/{type}/{sort}")]
         public async Task<IActionResult> GetPaginatedPokemon(int pageIndex, int pageSize, string type, string sort)
         {
+            List<object> returnResults = new List<object>();
+
             var pokeRepo = _unitOfWork.GetRepository<IPokePokemonRepository>();
 
             var results = await pokeRepo.GetPaginatedPokemon(pageIndex, pageSize, type, sort);
 
-            return Ok(results);
+            returnResults.Add(results);
+            returnResults.Add(results.TotalPages);
+
+            return Ok(returnResults);
         }
     }
 }
