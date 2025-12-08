@@ -20,10 +20,10 @@ jobs:
           submodules: true
           lfs: false
           # 🔥 Force Node 20 (required by Vite & react-router-dom 7)
-      - name: Use Node.js 20
+      - name: Use Node.js 20.19
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 20.19
  
       # 🔥 Build the React + Vite app manually
       - name: Build client app
@@ -56,5 +56,6 @@ jobs:
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_PROUD_GRASS_0A7B9550F }}
           action: "close"
+
 
 
