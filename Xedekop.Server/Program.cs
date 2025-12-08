@@ -46,7 +46,7 @@ namespace Xedekop.Server
                 options.AddPolicy("AllowSpecificOrigin",
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:5173")
+                        builder.WithOrigins("https://xedekop-e4fwgmbjage2gabv.eastus2-01.azurewebsites.net")
                                .AllowAnyHeader()
                                .AllowAnyMethod()
                                .AllowCredentials();
